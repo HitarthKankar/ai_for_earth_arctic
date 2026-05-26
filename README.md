@@ -97,6 +97,31 @@ This runs 5 examples demonstrating:
 4. Analyzing water coverage across grids
 5. Creating PyTorch DataLoaders
 
+**Visualization Example:**
+```python
+import matplotlib.pyplot as plt
+from data_loader import Sentinel2Dataset
+import numpy as np
+
+# Load dataset
+dataset = Sentinel2Dataset("data/S2_IMAGE_NUMPY", "data/S2_LABELS_NUMPY")
+
+# Get first grid
+image, label = dataset[0]
+
+# Create RGB visualization (bands 2, 1, 0 = R, G, B)
+rgb = np.stack([image[2], image[1], image[0]], axis=-1)
+rgb = np.clip(rgb / rgb.max(), 0, 1)
+
+# Plot
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+axes[0].imshow(rgb)
+axes[0].set_title('RGB Composite')
+axes[1].imshow(label.numpy(), cmap='Blues', vmin=0, vmax=100)
+axes[1].set_title('Lake Occurrence (%)')
+plt.show()
+```
+
 ## Sentinel-2 Bands
 
 The 10 bands included in the dataset:
