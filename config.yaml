@@ -1,0 +1,80 @@
+# Sentinel-2 Data Loader Configuration
+
+# Data paths - Update these to point to your local data directories
+DATA_CONFIG:
+  IMAGE_DIR: "data/S2_IMAGE_NUMPY"  # Path to Sentinel-2 image numpy arrays
+  LABEL_DIR: "data/S2_LABELS_NUMPY"  # Path to lake occurrence labels
+
+# Sentinel-2 Band Information
+# 10 bands processed from Sentinel-2, with mixed resolutions resampled to 10m
+BANDS:
+  - name: "B2"
+    index: 0
+    wavelength: "Blue (496.6 nm)"
+    resolution: "10m"
+  
+  - name: "B3"
+    index: 1
+    wavelength: "Green (560 nm)"
+    resolution: "10m"
+  
+  - name: "B4"
+    index: 2
+    wavelength: "Red (664.5 nm)"
+    resolution: "10m"
+  
+  - name: "B5"
+    index: 3
+    wavelength: "Red Edge 1 (703.9 nm)"
+    resolution: "20m"
+  
+  - name: "B6"
+    index: 4
+    wavelength: "Red Edge 2 (740.2 nm)"
+    resolution: "20m"
+  
+  - name: "B7"
+    index: 5
+    wavelength: "Red Edge 3 (782.8 nm)"
+    resolution: "20m"
+  
+  - name: "B8"
+    index: 6
+    wavelength: "NIR (835.1 nm)"
+    resolution: "10m"
+  
+  - name: "B8a"
+    index: 7
+    wavelength: "Red Edge 4 (864.8 nm)"
+    resolution: "20m"
+  
+  - name: "B11"
+    index: 8
+    wavelength: "SWIR 1 (1613.7 nm)"
+    resolution: "20m"
+  
+  - name: "B12"
+    index: 9
+    wavelength: "SWIR 2 (2202.4 nm)"
+    resolution: "20m"
+
+# Dataset Information
+DATASET_INFO:
+  total_grids: 100
+  grid_spatial_dims: [1098, 1097]
+  num_bands: 10
+  grid_naming: "{row}_{column}"
+  description: "Sentinel-2 composite from July 2019 over Alaska (tile T03VWJ), 100km x 100km region split into 10x10 grid"
+
+# Label Information
+LABEL_INFO:
+  source: "Alaska Lake and Pond Occurrence Dataset (ALPOD)"
+  description: "Pixel-level lake occurrence percentages (0-100)"
+  value_range: [0, 100]
+  note: "Raw values are percentages. Students can binarize at 25% threshold if needed."
+
+# Training Configuration (optional defaults)
+TRAINING:
+  num_workers: 4
+  pin_memory: true
+  shuffle: true
